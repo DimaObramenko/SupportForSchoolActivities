@@ -1,7 +1,20 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using SupportForSchoolActivities.DAL;
+using SupportForSchoolActivities.Domain.Entity;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+//отримуємо рядок підключення з файлу конфігурації
+string connection = builder.Configuration.GetConnectionString("DefaultConnection");
+//додаємо контекст ApplicationDbContext в якості сервісу в додатку 
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection));
+
+builder.Services.AddIdentity<User, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
 
 var app = builder.Build();
 
