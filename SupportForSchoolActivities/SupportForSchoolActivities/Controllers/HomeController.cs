@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SupportForSchoolActivities.DAL.Interfaces;
+using SupportForSchoolActivities.Domain.Entity;
 using SupportForSchoolActivities.Models;
 using System.Diagnostics;
 
@@ -6,15 +8,36 @@ namespace SupportForSchoolActivities.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IAdminRepository _adminRepository;
+        private readonly IStudentRepository _studentRepository;
+        private readonly IParentRepository _parentRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IAdminRepository adminRepository, IStudentRepository studentRepository, IParentRepository parentRepository)
         {
-            _logger = logger;
+            _adminRepository = adminRepository;
+            _studentRepository = studentRepository;
+            _parentRepository = parentRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var students = await _studentRepository.SelectAsync();
+            var myS = students.Where(s => s.FirstName == "StudF");
+            var parent = new Parent()
+            {
+                FirstName = "parent",
+                LastName = "parenT",
+                Students = new List<Student>()
+                {
+                    new Student()
+                    {
+                        FirstName = "Petro",
+                        LastName = "Petrov"
+                    },
+                    myS.First()
+                }
+            };
+            await _parentRepository.CreateAsync(parent);
             return View();
         }
 
