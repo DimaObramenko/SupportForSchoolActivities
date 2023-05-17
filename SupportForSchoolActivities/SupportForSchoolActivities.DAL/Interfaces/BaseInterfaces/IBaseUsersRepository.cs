@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SupportForSchoolActivities.DAL.Interfaces
+namespace SupportForSchoolActivities.DAL.Interfaces.BaseInterfaces
 {
     public interface IBaseUsersRepository<T> : IBaseRepository<T>
     {

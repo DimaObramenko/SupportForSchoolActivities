@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SupportForSchoolActivities.DAL.Interfaces;
+using SupportForSchoolActivities.DAL.Interfaces.BaseInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SupportForSchoolActivities.DAL.Repository
+namespace SupportForSchoolActivities.DAL.Repository.BaseRepositories
 {
     public abstract class BaseUsersRepository<TEntity> : BaseRepository<TEntity>, IBaseUsersRepository<TEntity>
         where TEntity : class
@@ -22,7 +22,7 @@ namespace SupportForSchoolActivities.DAL.Repository
         public async Task<bool> DeleteByIdAsync(string id)
         {
             var entity = await _db.Set<TEntity>().FindAsync(id);
-            if(entity != null)
+            if (entity != null)
             {
                 _db.Set<TEntity>().Remove(entity);
                 await _db.SaveChangesAsync();

@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SupportForSchoolActivities.DAL.Interfaces;
+using SupportForSchoolActivities.DAL.Interfaces.BaseInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SupportForSchoolActivities.DAL.Repository
+namespace SupportForSchoolActivities.DAL.Repository.BaseRepositories
 {
     public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
         where TEntity : class
