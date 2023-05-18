@@ -10,5 +10,6 @@ namespace SupportForSchoolActivities.DAL.Interfaces
 {
     public interface IStudentRepository : IBaseUsersRepository<Student>
     {
+        Task<bool> CreateAsync(Student student, Parent parent);
     }
 }

@@ -28,19 +28,6 @@ namespace SupportForSchoolActivities.Controllers
 
         public async Task<IActionResult> Index()
         {
-            Admin admin = new Admin()
-            {
-                FirstName = "Admin",
-                LastName = "Adm",
-            };
-            if(await _adminService.CreateAdmin(admin) == true)
-            {
-                return RedirectToAction(nameof(Privacy));
-            }
-            else
-            {
-                return RedirectToAction(nameof(Error));
-            }
             //var students = await _studentRepository.SelectAsync();
             //var myS = students.Where(s => s.FirstName == "StudF");
             //var parent = new Parent()
