@@ -4,6 +4,8 @@ using SupportForSchoolActivities.DAL;
 using SupportForSchoolActivities.DAL.Interfaces;
 using SupportForSchoolActivities.DAL.Repository;
 using SupportForSchoolActivities.Domain.Entity;
+using SupportForSchoolActivities.Service;
+using SupportForSchoolActivities.Service.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,7 @@ builder.Services.AddIdentity<User, IdentityRole>()
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IParentRepository, ParentRepository>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 
 var app = builder.Build();
 

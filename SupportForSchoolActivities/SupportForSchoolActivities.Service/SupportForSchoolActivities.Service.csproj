@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
+    <ProjectReference Include="..\SupportForSchoolActivities.DAL\SupportForSchoolActivities.DAL.csproj" />
+    <ProjectReference Include="..\SupportForSchoolActivities.Domain\SupportForSchoolActivities.Domain.csproj" />
   </ItemGroup>
 
 </Project>
