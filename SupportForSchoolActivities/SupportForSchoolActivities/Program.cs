@@ -23,9 +23,11 @@ builder.Services.AddIdentity<User, IdentityRole>()
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IParentRepository, ParentRepository>();
+builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IParentService, ParentService>();
+builder.Services.AddScoped<ITeacherService, TeacherService>();
 
 var app = builder.Build();
 
