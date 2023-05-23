@@ -1,0 +1,88 @@
+﻿@using SupportForSchoolActivities.Models.RegisterModels;
+@model StudentVM
+
+@{
+    ViewData["Title"] = "Upsert";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+
+<h4>Створення учня</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Upsert">
+            <div asp-validation-summary="All" class="text-danger"></div>           
+            <div class="form-group">
+                <label asp-for="Student.FirstName" class="control-label">Ім'я</label>
+                <input asp-for="Student.FirstName" class="form-control" />
+                <span asp-validation-for="Student.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Student.LastName" class="control-label">Прізвище</label>
+                <input asp-for="Student.LastName" class="form-control" />
+                <span asp-validation-for="Student.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SchoolClass">Клас</label>
+                <select asp-for="SchoolClass" asp-items="Model.SchoolClassSelectList" class="form-control">
+                    <option disabled selected>--Обрати клас--</option>
+                </select>
+                <span asp-validation-for="SchoolClass" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Student.Email" class="control-label"></label>
+                <input asp-for="Student.Email" class="form-control" />
+                <span asp-validation-for="Student.Email" class="text-danger"></span>
+            </div>           
+            <div class="form-group">
+                <label asp-for="Student.Password" class="control-label">Пароль</label>
+                <input asp-for="Student.Password" class="form-control" />
+                <span asp-validation-for="Student.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Student.ConfirmPassword" class="control-label">Підтвердіть пароль</label>
+                <input asp-for="Student.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="Student.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <br /><br /><br /><br />
+            <p3>Інформація про одного з батьків</p3>
+            <div class="form-group">
+                <label asp-for="Parent.FirstName" class="control-label">Ім'я</label>
+                <input asp-for="Parent.FirstName" class="form-control" />
+                <span asp-validation-for="Parent.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Parent.LastName" class="control-label">Прізвище</label>
+                <input asp-for="Parent.LastName" class="form-control" />
+                <span asp-validation-for="Parent.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Parent.Email" class="control-label"></label>
+                <input asp-for="Parent.Email" class="form-control" />
+                <span asp-validation-for="Parent.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Parent.Password" class="control-label">Пароль</label>
+                <input asp-for="Parent.Password" class="form-control" />
+                <span asp-validation-for="Parent.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Parent.ConfirmPassword" class="control-label">Підтвердіть пароль</label>
+                <input asp-for="Parent.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="Parent.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Створити студента" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
