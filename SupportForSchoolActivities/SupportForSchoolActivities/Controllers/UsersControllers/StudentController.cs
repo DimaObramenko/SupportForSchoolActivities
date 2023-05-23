@@ -13,6 +13,18 @@ namespace SupportForSchoolActivities.Controllers.UsersControllers
             _studentService = studentService;
         }
 
+        public async Task<IActionResult> Index()
+        {
+            IEnumerable<Student> students = await _studentService.GetAllStudents();
+            return View(students);
+        }
+
+        public IActionResult Upsert()
+        {
+
+            return View();
+        }
+
         public async Task<IActionResult> CreateStudent()
         {
             var st = new Student
