@@ -54,9 +54,17 @@ namespace SupportForSchoolActivities.Controllers.UsersControllers
             return RedirectToAction("Error", "Home");
         }
 
-        public IActionResult Delete()
+        public async Task<IActionResult> Delete(string id)
         {
-
+            if (await _adminService.DeleteAdmin(id))
+            {
+                return RedirectToAction("Index", "Admin");
+            }
+            else
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            
         }
     }
 }
