@@ -167,7 +167,7 @@ namespace SupportForSchoolActivities.DAL.Migrations
 
                     b.HasIndex("TeachersId");
 
-                    b.ToTable("SubjectTeacher");
+                    b.ToTable("SubjectTeacher", (string)null);
                 });
 
             modelBuilder.Entity("SupportForSchoolActivities.Domain.Entity.Grade", b =>
@@ -196,7 +196,7 @@ namespace SupportForSchoolActivities.DAL.Migrations
 
                     b.HasIndex("SubjectId");
 
-                    b.ToTable("Grade");
+                    b.ToTable("Grade", (string)null);
                 });
 
             modelBuilder.Entity("SupportForSchoolActivities.Domain.Entity.Homework", b =>
@@ -225,7 +225,7 @@ namespace SupportForSchoolActivities.DAL.Migrations
 
                     b.HasIndex("SubjectId");
 
-                    b.ToTable("Homework");
+                    b.ToTable("Homework", (string)null);
                 });
 
             modelBuilder.Entity("SupportForSchoolActivities.Domain.Entity.Schedule", b =>
@@ -254,7 +254,7 @@ namespace SupportForSchoolActivities.DAL.Migrations
 
                     b.HasIndex("SubjectId");
 
-                    b.ToTable("Schedule");
+                    b.ToTable("Schedule", (string)null);
                 });
 
             modelBuilder.Entity("SupportForSchoolActivities.Domain.Entity.SchoolClass", b =>
@@ -273,7 +273,7 @@ namespace SupportForSchoolActivities.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SchoolClass");
+                    b.ToTable("SchoolClass", (string)null);
                 });
 
             modelBuilder.Entity("SupportForSchoolActivities.Domain.Entity.Subject", b =>
@@ -290,7 +290,7 @@ namespace SupportForSchoolActivities.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Subject");
+                    b.ToTable("Subject", (string)null);
                 });
 
             modelBuilder.Entity("SupportForSchoolActivities.Domain.Entity.User", b =>

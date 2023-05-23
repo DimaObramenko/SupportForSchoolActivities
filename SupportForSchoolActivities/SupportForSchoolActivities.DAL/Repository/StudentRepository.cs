@@ -14,5 +14,20 @@ namespace SupportForSchoolActivities.DAL.Repository
         public StudentRepository(ApplicationDbContext db) : base(db)
         {
         }
+
+        public async Task<bool> CreateAsync(Student student, Parent parent)
+        {
+            try
+            {
+                student.Parent = parent;
+                await _db.Student.AddAsync(student);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            
+        }
     }
 }

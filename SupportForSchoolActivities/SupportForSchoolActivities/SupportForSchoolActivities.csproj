@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SupportForSchoolActivities.DAL\SupportForSchoolActivities.DAL.csproj" />
+    <ProjectReference Include="..\SupportForSchoolActivities.Service\SupportForSchoolActivities.Service.csproj" />
   </ItemGroup>
 
 </Project>

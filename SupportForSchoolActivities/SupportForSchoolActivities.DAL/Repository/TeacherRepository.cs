@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SupportForSchoolActivities.DAL.Repository
 {
-    public class TeacherRepository : BaseUsersRepository<Parent>, IParentRepository
+    public class TeacherRepository : BaseUsersRepository<Teacher>, ITeacherRepository
     {
         public TeacherRepository(ApplicationDbContext db) : base(db)
         {

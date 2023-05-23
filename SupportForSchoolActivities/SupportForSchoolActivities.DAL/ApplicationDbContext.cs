@@ -33,6 +33,13 @@ namespace SupportForSchoolActivities.DAL
                 .OnDelete(DeleteBehavior.NoAction);
                 entity.Navigation(e => e.Parent).IsRequired();
             });
+
+            modelBuilder.Entity<Student>(entity =>
+            {
+                entity.HasOne<SchoolClass>(s => s.SchoolClass)
+                .WithMany(c => c.Students)
+                .OnDelete(DeleteBehavior.NoAction);
+            });
         }
     }
 }

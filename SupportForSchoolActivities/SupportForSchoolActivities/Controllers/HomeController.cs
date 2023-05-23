@@ -2,6 +2,7 @@
 using SupportForSchoolActivities.DAL.Interfaces;
 using SupportForSchoolActivities.Domain.Entity;
 using SupportForSchoolActivities.Models;
+using SupportForSchoolActivities.Service.Interfaces;
 using System.Diagnostics;
 
 namespace SupportForSchoolActivities.Controllers
@@ -11,33 +12,39 @@ namespace SupportForSchoolActivities.Controllers
         private readonly IAdminRepository _adminRepository;
         private readonly IStudentRepository _studentRepository;
         private readonly IParentRepository _parentRepository;
+        private readonly IAdminService _adminService;
 
-        public HomeController(IAdminRepository adminRepository, IStudentRepository studentRepository, IParentRepository parentRepository)
+        public HomeController(IAdminService adminService)
+        {
+            _adminService = adminService;
+        }
+
+        /*public HomeController(IAdminRepository adminRepository, IStudentRepository studentRepository, IParentRepository parentRepository)
         {
             _adminRepository = adminRepository;
             _studentRepository = studentRepository;
             _parentRepository = parentRepository;
-        }
+        }*/
 
         public async Task<IActionResult> Index()
         {
-            var students = await _studentRepository.SelectAsync();
-            var myS = students.Where(s => s.FirstName == "StudF");
-            var parent = new Parent()
-            {
-                FirstName = "parent",
-                LastName = "parenT",
-                Students = new List<Student>()
-                {
-                    new Student()
-                    {
-                        FirstName = "Petro",
-                        LastName = "Petrov"
-                    },
-                    myS.First()
-                }
-            };
-            await _parentRepository.CreateAsync(parent);
+            //var students = await _studentRepository.SelectAsync();
+            //var myS = students.Where(s => s.FirstName == "StudF");
+            //var parent = new Parent()
+            //{
+            //    FirstName = "parent",
+            //    LastName = "parenT",
+            //    Students = new List<Student>()
+            //    {
+            //        new Student()
+            //        {
+            //            FirstName = "Petro",
+            //            LastName = "Petrov"
+            //        },
+            //        myS.First()
+            //    }
+            //};
+            //await _parentRepository.CreateAsync(parent);
             return View();
         }
 
