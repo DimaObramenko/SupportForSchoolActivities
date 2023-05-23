@@ -38,7 +38,7 @@ namespace SupportForSchoolActivities.Controllers.UsersControllers
         public async Task<IActionResult> DeleteStudent()
         {
             var stu = await _studentService.GetAllStudents();
-            var st = stu.FirstOrDefault(s => s.FirstName == "a");
+            var st = stu.FirstOrDefault(s => s.FirstName == "TestS1");
             if(st != null)
             {
                 if(await _studentService.DeleteStudent(st.Id))

@@ -1,13 +1,14 @@
 ﻿using SupportForSchoolActivities.DAL.Interfaces;
 using SupportForSchoolActivities.DAL.Repository;
 using SupportForSchoolActivities.Domain.Entity;
+using SupportForSchoolActivities.Service.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SupportForSchoolActivities.Service.Interfaces
+namespace SupportForSchoolActivities.Service
 {
     public class TeacherService : ITeacherService
     {
@@ -75,12 +76,12 @@ namespace SupportForSchoolActivities.Service.Interfaces
             try
             {
                 var oldTeacher = await _teacherRepository.GetAsync(id);
-                oldTeacher.FirstName= teacher.FirstName;
-                oldTeacher.LastName= teacher.LastName;
-                oldTeacher.Email= teacher.Email;
-                oldTeacher.PhoneNumber= teacher.PhoneNumber;
-                oldTeacher.UserName= teacher.UserName;
-                oldTeacher.Subjects= teacher.Subjects;
+                oldTeacher.FirstName = teacher.FirstName;
+                oldTeacher.LastName = teacher.LastName;
+                oldTeacher.Email = teacher.Email;
+                oldTeacher.PhoneNumber = teacher.PhoneNumber;
+                oldTeacher.UserName = teacher.UserName;
+                oldTeacher.Subjects = teacher.Subjects;
                 await _teacherRepository.UpdateAsync(oldTeacher);
                 return true;
             }

@@ -13,6 +13,17 @@ namespace SupportForSchoolActivities.Controllers.UsersControllers
             _parentService = parentService;
         }
 
+        public async Task<IActionResult> DeleteParent()
+        {
+            if (await _parentService.DeleteParent("fd2a3623-cb5c-4e7d-a800-ada8a334457b"))
+            {
+                return RedirectToAction("Privacy", "Home");
+            }
+            else
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
         public async Task<IActionResult> CreateParent()
         {
             Parent parent = new Parent()
