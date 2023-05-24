@@ -1,4 +1,5 @@
-﻿using SupportForSchoolActivities.DAL.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using SupportForSchoolActivities.DAL.Interfaces;
 using SupportForSchoolActivities.DAL.Repository.BaseRepositories;
 using SupportForSchoolActivities.Domain.Entity;
 using System;
@@ -28,6 +29,15 @@ namespace SupportForSchoolActivities.DAL.Repository
                 return false;
             }
             
+        }
+
+        public async Task<List<Student>> SelectAsync()
+        {
+            return await _db.Student
+                .AsNoTracking()
+                .Include(s => s.Parent)
+                .Include(s => s.SchoolClass)
+                .ToListAsync();
         }
     }
 }

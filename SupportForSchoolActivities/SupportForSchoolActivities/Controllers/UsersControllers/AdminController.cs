@@ -48,7 +48,7 @@ namespace SupportForSchoolActivities.Controllers.UsersControllers
                 if (role != null)
                 {
                     await _userManager.AddToRoleAsync(admin, role.Name);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Admin");
                 }
             }
             return RedirectToAction("Error", "Home");
