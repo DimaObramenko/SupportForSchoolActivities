@@ -1,4 +1,5 @@
-﻿using SupportForSchoolActivities.DAL.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using SupportForSchoolActivities.DAL.Interfaces;
 using SupportForSchoolActivities.DAL.Repository.BaseRepositories;
 using SupportForSchoolActivities.Domain.Entity;
 using System;
@@ -13,6 +14,14 @@ namespace SupportForSchoolActivities.DAL.Repository
     {
         public TeacherRepository(ApplicationDbContext db) : base(db)
         {
+        }
+
+        public async Task<List<Teacher>> SelectAsync()
+        {
+            return await _db.Teacher
+                .AsNoTracking()
+                .Include(t => t.Subjects)
+                .ToListAsync();
         }
     }
 }
