@@ -75,6 +75,13 @@ namespace SupportForSchoolActivities.Service
             return student;
         }
 
+        public async Task<List<Student>> GetStudentsFromOneClass(int id)
+        {
+            var students = await _studentRepository.SelectAsync();
+            var studentsFromOneClass = students.Where(s => s.SchoolClass.Id == id).ToList();
+            return studentsFromOneClass;
+        }
+
         public async Task<bool> UpdateStudent(string id, Student student)
         {
             if (student == null || id == null)

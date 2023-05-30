@@ -15,6 +15,7 @@ namespace SupportForSchoolActivities.Service.Interfaces.EntityInterfaces
         Task<bool> DeleteClass(int id);
         Task<SchoolClass> GetClass(int id);
         Task<bool> UpdateClass(int id, SchoolClass schoolClass);
+        Task<int> GetIdClassByName(string name);
 
     }
 }

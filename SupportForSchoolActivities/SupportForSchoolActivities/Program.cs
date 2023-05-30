@@ -31,11 +31,13 @@ builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IParentRepository, ParentRepository>();
 builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
 builder.Services.AddScoped<ISchoolClassRepository, SchoolClassRepository>();
+builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IParentService, ParentService>();
 builder.Services.AddScoped<ITeacherService, TeacherService>();
 builder.Services.AddScoped<ISchoolClassService, SchoolClassService>();
+builder.Services.AddScoped<ISubjectService, SubjectService>();
 
 var app = builder.Build();
 

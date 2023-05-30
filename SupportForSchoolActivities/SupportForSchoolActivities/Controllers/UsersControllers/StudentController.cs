@@ -68,10 +68,10 @@ namespace SupportForSchoolActivities.Controllers.UsersControllers
                 {
                     await _userManager.AddToRoleAsync(parent, role1.Name);
                     await _userManager.AddToRoleAsync(student, role.Name);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index");
                 }
             }
-            return RedirectToAction("Index", "Home");
+            return View(studentVM);
         }
 
         public async Task<IActionResult> Delete(string id)
