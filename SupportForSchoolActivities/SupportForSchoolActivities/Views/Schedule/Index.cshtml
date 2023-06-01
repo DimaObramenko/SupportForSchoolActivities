@@ -1,277 +1,38 @@
-﻿
+﻿@using SupportForSchoolActivities.Models.ViewModels;
+@model SchoolClassVM
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-
+<div class="container-fluid p-5 text-center">
+    <h1>Оберіть клас на редагування розкладу</h1>
+</div>
 <div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <h4>Понеділок</h4>
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th width="5%" class="text-center">№</th>
-                        <th width="30%" class="text-center">Предмет</th>
-                        <th width="52%" class="text-center">Домашнє завдання</th>
-                        <th width="13%"class="text-center">Оцінка</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Зарубіжна література</td>
-                        <td>"Гамлет", Шекспір</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Англійська мова</td>
-                        <td>Learn words of new topic</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Біологія</td>
-                        <td>Параграф 9</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Хімія</td>
-                        <td>Ст. 12-17</td>
-                        <td>8</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Основи здоров'я</td>
-                        <td></td>
-                        <td>12</td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>Історія України</td>
-                        <td>Параграф 4</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>Художня література</td>
-                        <td>Доповідь про добу бароко</td>
-                        <td>11</td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>Фізична культура</td>
-                        <td></td>
-                        <td>10</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-md-6">
-            <h4>Вівторок</h4>
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th width="5%" class="text-center">№</th>
-                        <th width="30%" class="text-center">Предмет</th>
-                        <th width="52%" class="text-center">Домашнє завдання</th>
-                        <th width="13%" class="text-center">Оцінка</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Математика</td>
-                        <td>Вправа 25, ст. 12</td>
-                        <td>9</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Інформатика</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Українська мова</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Україньска література</td>
-                        <td>Т.Шевченко, "Катерина" - прочитати</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Фізична культура</td>
-                        <td></td>
-                        <td>12</td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>Історія України</td>
-                        <td></td>
-                        <td>7</td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <h4>Середа</h4>
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th width="5%" class="text-center">№</th>
-                        <th width="30%" class="text-center">Предмет</th>
-                        <th width="52%" class="text-center">Домашнє завдання</th>
-                        <th width="13%" class="text-center">Оцінка</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-md-6">
-            <h4>Четвер</h4>
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th width="5%" class="text-center">№</th>
-                        <th width="30%" class="text-center">Предмет</th>
-                        <th width="52%" class="text-center">Домашнє завдання</th>
-                        <th width="13%" class="text-center">Оцінка</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (int i = 1; i <= 8; i++)
+    <div class="row justify-content-center">
+        <table class="table table-bordered table-striped" style="width: 60%">
+            <thead>
+                <tr>
+                    <th class="text-center" width="20%" scope="col">Номер класу</th>
+                    @for (int i = 0; i < Model.MaxAmountOfClasses; i++)
                     {
-                        <tr>
-                            <td>@i</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        <th class="text-center"></th>
                     }
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <h4>П'ятниця</h4>
-            <table class="table table-bordered table-striped">
-                <thead>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 1; i <= 11; i++)
+                {
                     <tr>
-                        <th width="5%" class="text-center">№</th>
-                        <th width="30%" class="text-center">Предмет</th>
-                        <th width="52%" class="text-center">Домашнє завдання</th>
-                        <th width="13%" class="text-center">Оцінка</th>
+                        <td class="text-center">@i</td>
+                        @foreach (var item in Model.SchoolClasses.Where(c => c.ClassNumber == i))
+                        {
+                            <td class="text-center">
+                                <a asp-action="ClassSchedule" asp-route-classId="@item.Id" class="btn btn-light btn-rounded btn-sm">@item.Name</a>
+                            </td>
+                        }
                     </tr>
-                </thead>
-                <tbody>
-                    @for (int i = 1; i <= 8; i++)
-                    {
-                        <tr>
-                            <td>@i</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-        <div class="col-md-6">
-            <h4>Субота</h4>
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th width="5%" class="text-center">№</th>
-                        <th width="30%" class="text-center">Предмет</th>
-                        <th width="52%" class="text-center">Домашнє завдання</th>
-                        <th width="13%" class="text-center">Оцінка</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (int i = 1; i <= 8; i++)
-                    {
-                        <tr>
-                            <td>@i</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
-
-

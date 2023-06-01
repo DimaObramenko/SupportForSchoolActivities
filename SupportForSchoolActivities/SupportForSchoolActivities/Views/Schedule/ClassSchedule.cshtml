@@ -1,0 +1,173 @@
+﻿@using SupportForSchoolActivities.Models.ViewModels;
+@model ScheduleVM
+
+@{
+    ViewData["Title"] = "ClassSchedule";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h4>Понеділок</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th width="20%" class="text-center">№</th>
+                        <th width="80%" class="text-center">Предмет</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 1; i <= WC.NumberOfLessons; i++)
+                    {
+                        <tr>
+                            <td>@i</td>
+                            <td>
+                                @if (Model.Schedules.Any(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Monday))
+                                {
+                                    @Model.Schedules.FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Monday)?.Subject.Name
+                                }
+                            </td>
+                        </tr>
+                    }                   
+                </tbody>
+            </table>
+            <a asp-action="Upsert" asp-route-classId="@Model.ClassId" asp-route-schedules="@Model.Schedules" asp-route-day="@DayOfWeek.Monday" class="btn btn-primary mx-2">Редагувати</a>
+        </div>
+        <div class="col-md-4">
+            <h4>Вівторок</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th width="20%" class="text-center">№</th>
+                        <th width="80%" class="text-center">Предмет</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 1; i <= WC.NumberOfLessons; i++)
+                    {
+                        <tr>
+                            <td>@i</td>
+                            <td>
+                                @if (Model.Schedules.Any(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Tuesday))
+                                {
+                                    @Model.Schedules.FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Tuesday)?.Subject.Name
+                                }
+                            </td>
+                        </tr>
+                    }                   
+                </tbody>
+            </table>
+            <a asp-action="Upsert" asp-route-classId="@Model.ClassId" asp-route-day="@DayOfWeek.Tuesday" class="btn btn-primary mx-2">Редагувати</a>
+        </div>
+        <div class="col-md-4">
+            <h4>Середа</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th width="20%" class="text-center">№</th>
+                        <th width="80%" class="text-center">Предмет</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 1; i <= WC.NumberOfLessons; i++)
+                    {
+                            <tr>
+                                <td>@i</td>
+                                <td>
+                                @if (Model.Schedules.Any(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Wednesday))
+                                {
+                                    @Model.Schedules.FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Wednesday)?.Subject.Name
+                                }
+                                </td>
+                            </tr>
+                    }                   
+                </tbody>
+            </table>
+            <a asp-action="Upsert" asp-route-classId="@Model.ClassId" asp-route-day="@DayOfWeek.Wednesday" class="btn btn-primary mx-2">Редагувати</a>
+        </div>       
+    </div>
+
+    <br /><br /><br />
+
+    <div class="row">
+        <div class="col-md-4">
+            <h4>Четвер</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th width="20%" class="text-center">№</th>
+                        <th width="80%" class="text-center">Предмет</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 1; i <= WC.NumberOfLessons; i++)
+                    {
+                        <tr>
+                            <td>@i</td>
+                            <td>
+                                @if (Model.Schedules.Any(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Thursday))
+                                {
+                                    @Model.Schedules.FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Thursday)?.Subject.Name
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <a asp-action="Upsert" asp-route-classId="@Model.ClassId" asp-route-schedules="@Model.Schedules" asp-route-day="@DayOfWeek.Thursday" class="btn btn-primary mx-2">Редагувати</a>
+        </div>
+        <div class="col-md-4">
+            <h4>П'ятниця</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th width="20%" class="text-center">№</th>
+                        <th width="80%" class="text-center">Предмет</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 1; i <= WC.NumberOfLessons; i++)
+                    {
+                        <tr>
+                            <td>@i</td>
+                            <td>
+                                @if (Model.Schedules.Any(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Friday))
+                                {
+                                    @Model.Schedules.FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Friday)?.Subject.Name
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <a asp-action="Upsert" asp-route-classId="@Model.ClassId" asp-route-day="@DayOfWeek.Friday" class="btn btn-primary mx-2">Редагувати</a>
+        </div>
+        <div class="col-md-4">
+            <h4>Субота</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th width="20%" class="text-center">№</th>
+                        <th width="80%" class="text-center">Предмет</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 1; i <= WC.NumberOfLessons; i++)
+                    {
+                        <tr>
+                            <td>@i</td>
+                            <td>
+                                @if (Model.Schedules.Any(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Saturday))
+                                {
+                                    @Model.Schedules.FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Saturday)?.Subject.Name
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <a asp-action="Upsert" asp-route-classId="@Model.ClassId" asp-route-day="@DayOfWeek.Saturday" class="btn btn-primary mx-2">Редагувати</a>
+        </div>
+    </div>
+</div>
