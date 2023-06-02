@@ -26,6 +26,7 @@
                                 @if(Model.Schedules.Any(s=>s.LessonNumber == i))
                                 {
                                     <select name="@i.ToString()" class="form-control">
+                                        <option value=""></option>
                                         @foreach (var item in Model.SubjectsSelectList)
                                         {
                                             if (@item.Value == @Model.Schedules.FirstOrDefault(s => s.LessonNumber == i)?.Subject.Id.ToString())

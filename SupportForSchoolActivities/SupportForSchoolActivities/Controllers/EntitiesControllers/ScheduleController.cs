@@ -66,7 +66,8 @@ namespace SupportForSchoolActivities.Controllers.EntitiesControllers
         [HttpGet]
         public async Task<IActionResult> Upsert(int classId, DayOfWeek day)
         {
-            var schedules = TempData.Get<List<Schedule>>("key");
+            var allSchedules = TempData.Get<List<Schedule>>("key");
+            var schedules = allSchedules.Where(s=>s.DayOfWeek== day).ToList();
             var subjects = await _subjectService.GetAllSubjects();
 
             ScheduleVM scheduleVM = new ScheduleVM()
@@ -88,20 +89,94 @@ namespace SupportForSchoolActivities.Controllers.EntitiesControllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Upsert(ScheduleVM scheduleVM)
         {
+            var schedulesBeforeEdit = (await _scheduleService.GetAllSchedules())
+                .Where(s => s.SchoolClass.Id == scheduleVM.ClassId &&
+                s.DayOfWeek == scheduleVM.DayOfWeek)
+                .ToList();
+
+            var schoolClass = await _classService.GetClass(scheduleVM.ClassId);
+
             var form = HttpContext.Request.Form;
             var scheduleSubjectList = form.ToList();
-            Dictionary<int, int> editSchedule = new Dictionary<int, int>();
+            Dictionary<int, int> editScheduleDic = new Dictionary<int, int>();
             foreach (var item in scheduleSubjectList)
             {
                 if(item.Value != String.Empty)
                 {
                     if(int.TryParse(item.Value.ToString(), out int value) && int.TryParse(item.Key.ToString(), out int key))
                     {
-                       editSchedule.Add(key, value);
+                       editScheduleDic.Add(key, value);
                     }                   
                 }
             }
-            int count = editSchedule.Count;
+            
+            var scheduleAfterEdit = new List<Schedule>();
+            foreach(var schedule in editScheduleDic)
+            {
+                scheduleAfterEdit.Add(new Schedule()
+                {
+                    SchoolClass = schoolClass,
+                    DayOfWeek = scheduleVM.DayOfWeek,
+                    LessonNumber = schedule.Key,
+                    Subject = await _subjectService.GetSubject(schedule.Value),
+                });
+            }
+            int countWithoutChanges = 0;
+            int countWithUpdates = 0;
+            int countAdding = 0;
+            int countDeleting = 0;
+
+            foreach (var schedule in schedulesBeforeEdit)
+            {
+                if(scheduleAfterEdit.Any(s=>
+                    s.SchoolClass.Id == schedule.SchoolClass.Id &&
+                    s.DayOfWeek == schedule.DayOfWeek &&
+                    s.LessonNumber == schedule.LessonNumber))
+                {
+
+                }
+                else
+                {
+                    await _scheduleService.DeleteSchedule(schedule.Id);
+                    countDeleting++;
+                }
+            }
+
+            foreach(var schedule in scheduleAfterEdit)
+            {
+                if(schedulesBeforeEdit.Any(s =>
+                    s.SchoolClass.Id == schedule.SchoolClass.Id &&
+                    s.DayOfWeek == schedule.DayOfWeek &&
+                    s.LessonNumber == schedule.LessonNumber))
+                {
+                    if (schedulesBeforeEdit.Any(s =>
+                        s.SchoolClass.Id == schedule.SchoolClass.Id &&
+                        s.DayOfWeek == schedule.DayOfWeek &&
+                        s.Subject.Name == schedule.Subject.Name &&
+                        s.LessonNumber == schedule.LessonNumber))
+                    {
+                        countWithoutChanges++;
+                    }
+                    else
+                    {
+                        var updateSchedule = schedulesBeforeEdit.FirstOrDefault(s =>
+                            s.SchoolClass.Id == schedule.SchoolClass.Id &&
+                            s.DayOfWeek == schedule.DayOfWeek &&
+                            s.LessonNumber == schedule.LessonNumber);
+                        await _scheduleService.UpdateSchedule(updateSchedule.Id, schedule);
+                        countWithUpdates++;
+                    }
+                }
+                else
+                {
+                    await _scheduleService.CreateSchedule(schedule);
+                    countAdding++;
+                }
+            }
+
+
+
+
             return RedirectToAction("Index");
         }
 
