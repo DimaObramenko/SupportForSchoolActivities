@@ -1,0 +1,38 @@
+﻿@using SupportForSchoolActivities.Models.ViewModels;
+@model SchoolClassVM
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="container-fluid p-5 text-center">
+    <h1>Оберіть клас на редагування розкладу</h1>
+</div>
+<div class="container">
+    <div class="row justify-content-center">
+        <table class="table table-bordered table-striped" style="width: 60%">
+            <thead>
+                <tr>
+                    <th class="text-center" width="20%" scope="col">Номер класу</th>
+                    @for (int i = 0; i < Model.MaxAmountOfClasses; i++)
+                    {
+                        <th class="text-center"></th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 1; i <= 11; i++)
+                {
+                    <tr>
+                        <td class="text-center">@i</td>
+                        @foreach (var item in Model.SchoolClasses.Where(c => c.ClassNumber == i))
+                        {
+                            <td class="text-center">
+                                <a asp-action="ClassSchedule" asp-route-classId="@item.Id" class="btn btn-light btn-rounded btn-sm">@item.Name</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

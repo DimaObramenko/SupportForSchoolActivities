@@ -40,6 +40,7 @@ namespace SupportForSchoolActivities.DAL
                 .WithMany(c => c.Students)
                 .OnDelete(DeleteBehavior.NoAction);
             });
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
         }
     }
 }

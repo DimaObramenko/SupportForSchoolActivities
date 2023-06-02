@@ -65,6 +65,14 @@ namespace SupportForSchoolActivities.Service.EntityServices
             return await _classRepository.GetAsync(id);
         }
 
+        public async Task<int> GetIdClassByName(string name)
+        {
+            var allClasses = await _classRepository.SelectAsync();
+            var schoolClass = allClasses.FirstOrDefault(c => c.Name == name);
+            
+            return schoolClass.Id;
+        }
+
         public async Task<List<SchoolClass>> GetOneYearClasses(int number)
         {
             var allSchoolClasses = await _classRepository.SelectAsync();

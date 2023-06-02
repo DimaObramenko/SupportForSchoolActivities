@@ -47,6 +47,36 @@ namespace SupportForSchoolActivities.DAL.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "77a9b96b-8248-444b-ba00-0ae86670d563",
+                            ConcurrencyStamp = "ce586620-24e8-4d1c-80dc-bdef539e22e5",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "e60f25a4-4cb3-4dca-87e0-1ca8abd5e549",
+                            ConcurrencyStamp = "eacb8e9a-e867-45dc-9b4d-c5ab3164e641",
+                            Name = "Teacher",
+                            NormalizedName = "TEACHER"
+                        },
+                        new
+                        {
+                            Id = "233cce72-ad80-49b7-94b1-bd2f71dfa3cf",
+                            ConcurrencyStamp = "0d0bd938-4ccc-4e4d-abca-1e84ecf867d5",
+                            Name = "Student",
+                            NormalizedName = "STUDENT"
+                        },
+                        new
+                        {
+                            Id = "3ce29bb2-c6db-4b4c-8d8d-a3dd6c797fb8",
+                            ConcurrencyStamp = "87e4259e-093e-44a3-bf5e-32dc0e48e4fd",
+                            Name = "Parent",
+                            NormalizedName = "PARENT"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -167,7 +197,7 @@ namespace SupportForSchoolActivities.DAL.Migrations
 
                     b.HasIndex("TeachersId");
 
-                    b.ToTable("SubjectTeacher", (string)null);
+                    b.ToTable("SubjectTeacher");
                 });
 
             modelBuilder.Entity("SupportForSchoolActivities.Domain.Entity.Grade", b =>
@@ -196,7 +226,7 @@ namespace SupportForSchoolActivities.DAL.Migrations
 
                     b.HasIndex("SubjectId");
 
-                    b.ToTable("Grade", (string)null);
+                    b.ToTable("Grade");
                 });
 
             modelBuilder.Entity("SupportForSchoolActivities.Domain.Entity.Homework", b =>
@@ -225,7 +255,7 @@ namespace SupportForSchoolActivities.DAL.Migrations
 
                     b.HasIndex("SubjectId");
 
-                    b.ToTable("Homework", (string)null);
+                    b.ToTable("Homework");
                 });
 
             modelBuilder.Entity("SupportForSchoolActivities.Domain.Entity.Schedule", b =>
@@ -254,7 +284,7 @@ namespace SupportForSchoolActivities.DAL.Migrations
 
                     b.HasIndex("SubjectId");
 
-                    b.ToTable("Schedule", (string)null);
+                    b.ToTable("Schedule");
                 });
 
             modelBuilder.Entity("SupportForSchoolActivities.Domain.Entity.SchoolClass", b =>
@@ -273,7 +303,7 @@ namespace SupportForSchoolActivities.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SchoolClass", (string)null);
+                    b.ToTable("SchoolClass");
                 });
 
             modelBuilder.Entity("SupportForSchoolActivities.Domain.Entity.Subject", b =>
@@ -290,7 +320,7 @@ namespace SupportForSchoolActivities.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Subject", (string)null);
+                    b.ToTable("Subject");
                 });
 
             modelBuilder.Entity("SupportForSchoolActivities.Domain.Entity.User", b =>
@@ -532,7 +562,8 @@ namespace SupportForSchoolActivities.DAL.Migrations
 
                     b.HasOne("SupportForSchoolActivities.Domain.Entity.SchoolClass", "SchoolClass")
                         .WithMany("Students")
-                        .HasForeignKey("SchoolClassId");
+                        .HasForeignKey("SchoolClassId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Parent");
 

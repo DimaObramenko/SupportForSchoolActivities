@@ -16,5 +16,6 @@ namespace SupportForSchoolActivities.Service.Interfaces
         Task<bool> CreateStudent(Student student);
         Task<bool> UpdateStudent(string id, Student student);
         Task<bool> DeleteStudent(string id);
+        Task<List<Student>> GetStudentsFromOneClass(int id);
     }
 }
