@@ -11,6 +11,7 @@ namespace SupportForSchoolActivities.Domain.Entity
     public class Student : User
     {
         public virtual ICollection<Grade> Grades { get; set; }
+        public virtual ICollection<Remark> Remarks { get; set; }
         [Required]
         public virtual Parent Parent { get; set; }
         public virtual SchoolClass SchoolClass { get; set; }

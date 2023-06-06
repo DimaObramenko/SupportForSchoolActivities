@@ -23,6 +23,7 @@ namespace SupportForSchoolActivities.DAL
         public DbSet<Grade> Grade { get; set; }
         public DbSet<Homework> Homework { get; set; }
         public DbSet<Schedule> Schedule { get; set; }
+        public DbSet<Remark> Remark { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
