@@ -30,6 +30,10 @@ namespace SupportForSchoolActivities.Controllers.UsersControllers
         public async Task<IActionResult> Index()
         {
             IEnumerable<Student> students = await _studentService.GetAllStudents();
+            students = students.OrderBy(s => s.SchoolClass.Name)
+                .ThenBy(s => s.LastName)
+                .ThenBy(s => s.FirstName)
+                .ToList();
             return View(students);
         }
 

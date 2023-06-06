@@ -56,11 +56,16 @@ namespace SupportForSchoolActivities.Controllers.EntitiesControllers
                     p++;
                 }
             }
+            studentList = studentList.OrderBy(s => s.SchoolClass.Name)
+                .ThenBy(s => s.LastName)
+                .ThenBy(s => s.FirstName)
+                .ToList();
 
             OneSchoolClassVM classVM = new OneSchoolClassVM()
             {
                 Students = studentList,
-                SchoolClassId = await _classService.GetIdClassByName(name)
+                SchoolClassId = await _classService.GetIdClassByName(name),
+                SchoolClassName = name
             };
             
 

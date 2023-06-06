@@ -6,5 +6,6 @@ namespace SupportForSchoolActivities.Models.ViewModels
     {
         public IEnumerable<Student> Students { get; set; }
         public int SchoolClassId { get; set; }
+        public string SchoolClassName { get; set; }
     }
 }
