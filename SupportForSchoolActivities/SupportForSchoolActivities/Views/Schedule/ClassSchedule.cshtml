@@ -21,7 +21,7 @@
                     @for (int i = 1; i <= WC.NumberOfLessons; i++)
                     {
                         <tr>
-                            <td>@i</td>
+                            <td class="text-center">@i</td>
                             <td>
                                 @if (Model.Schedules.Any(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Monday))
                                 {
@@ -47,7 +47,7 @@
                     @for (int i = 1; i <= WC.NumberOfLessons; i++)
                     {
                         <tr>
-                            <td>@i</td>
+                            <td class="text-center">@i</td>
                             <td>
                                 @if (Model.Schedules.Any(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Tuesday))
                                 {
@@ -73,7 +73,7 @@
                     @for (int i = 1; i <= WC.NumberOfLessons; i++)
                     {
                             <tr>
-                                <td>@i</td>
+                            <td class="text-center">@i</td>
                                 <td>
                                 @if (Model.Schedules.Any(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Wednesday))
                                 {
@@ -104,7 +104,7 @@
                     @for (int i = 1; i <= WC.NumberOfLessons; i++)
                     {
                         <tr>
-                            <td>@i</td>
+                            <td class="text-center">@i</td>
                             <td>
                                 @if (Model.Schedules.Any(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Thursday))
                                 {
@@ -130,7 +130,7 @@
                     @for (int i = 1; i <= WC.NumberOfLessons; i++)
                     {
                         <tr>
-                            <td>@i</td>
+                            <td class="text-center">@i</td>
                             <td>
                                 @if (Model.Schedules.Any(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Friday))
                                 {
@@ -156,7 +156,7 @@
                     @for (int i = 1; i <= WC.NumberOfLessons; i++)
                     {
                         <tr>
-                            <td>@i</td>
+                            <td class="text-center">@i</td>
                             <td>
                                 @if (Model.Schedules.Any(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Saturday))
                                 {

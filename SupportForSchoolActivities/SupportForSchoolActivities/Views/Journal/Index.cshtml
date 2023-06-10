@@ -1,0 +1,57 @@
+﻿@using SupportForSchoolActivities.Models.ViewModels;
+@model JournalVM
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="d-flex align-items-center justify-content-center">
+    <div class="align-content-center rounded p-3 shadow-sm btn btn-light" style="margin: 0 5px;">
+        <h2 class="text-center">@Model.SchoolClassName, @Model.SubjectName</h2>
+    </div>
+</div>
+<br />
+<br />
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>Учень</td>
+                @for (int i = 0; i < Model.DayOfLessons.Count; i++)
+                {
+                    <td class="text-center" width="5%">@Model.DayOfLessons[i].ToString("dd/MM")</td>
+                }             
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Students.Count(); i++)
+            {
+                <tr>
+                    <td>
+                        <a class="btn btn-light">i</a>
+                    </td>
+                    <td>@(i+1)</td>
+                    <td>@(Model.Students[i].LastName) @(Model.Students[i].FirstName)</td>
+                    @for (int j = 0; j < Model.DayOfLessons.Count; j++)
+                    {
+                        <td class="text-center" width="5%"></td>
+                    }   
+                </tr>
+            }
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                @for (int i = 0; i < Model.DayOfLessons.Count; i++)
+                {
+                    <td class="text-center" width="5%">
+                        <a class="btn btn-light">ДЗ</a>
+                    </td>
+                }  
+                </tr>
+        </tbody>
+    </table>
+</div>
