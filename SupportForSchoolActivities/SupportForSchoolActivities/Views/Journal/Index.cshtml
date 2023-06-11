@@ -22,7 +22,11 @@
                 <td>Учень</td>
                 @for (int i = 0; i < Model.DayOfLessons.Count; i++)
                 {
-                    <td class="text-center" width="5%">@Model.DayOfLessons[i].ToString("dd/MM")</td>
+                    <td class="text-center" width="5%">
+                        <a asp-action="EditGrades" asp-route-date="@Model.DayOfLessons[i].ToString("yyyy-MM-dd")" asp-route-subjectName="@Model.SubjectName" class="btn btn-light mx-2">
+                            @Model.DayOfLessons[i].ToString("dd/MM")
+                        </a>                       
+                    </td>
                 }             
             </tr>
         </thead>

@@ -63,7 +63,7 @@ namespace SupportForSchoolActivities.Controllers
                 Students = students,
                 DayOfLessons = datesWithDayOfWeek
             };
-
+            WC.Students = students;
             return View(journalVM);
         }
 
@@ -108,6 +108,17 @@ namespace SupportForSchoolActivities.Controllers
             WC.Schedules = schedules;
             return RedirectToAction("Index", new { schoolClassId = subjectClassVM.SchoolClassId });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> EditGrades(DateTime date, string subjectName)
+        {
+            var subject = (await _subjectService.GetAllSubjects()).FirstOrDefault(s => s.Name == subjectName);
+            List<Student> students = WC.Students;
+
+
+            return RedirectToAction(nameof(SelectJournal));
+        }
+
 
         public static IEnumerable<DateTime> EachDay(DateTime startDate, DateTime endDate)
         {
