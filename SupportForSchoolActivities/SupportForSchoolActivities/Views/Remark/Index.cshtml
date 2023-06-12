@@ -1,0 +1,40 @@
+﻿@using SupportForSchoolActivities.Models.ViewModels;
+@model RemarkVM
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 class="text-center">@(Model.Student.LastName) @(Model.Student.FirstName)</h2>
+@if(Model.Remarks.Count == 0)
+{
+    <h3 class="text-center">Зауважень немає</h3>
+}
+else
+{
+    <br />
+    <br />
+    <div class="row justify-content-center">
+        <table class="table table-bordered table-striped" style="width: 60%">
+            <thead>
+                <tr>
+                    <th class="text-center" width="10%">№</th>
+                    <th class="text-center" width="20%">Дата</th>
+                    <th class="text-center" width="70%">Зауваження</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Remarks.Count; i++)
+                {
+                        <tr>
+                            <td class="text-center">@(i + 1)</td>
+                            <td class="text-center">@Model.Remarks[i].Date.ToString("dd/MM")</td>
+                            <td class="text-center">@Model.Remarks[i].Description</td>
+                        </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+
