@@ -73,7 +73,7 @@ namespace SupportForSchoolActivities.Service.EntityServices
                 oldGrade.Student = grade.Student;
                 oldGrade.Mark = grade.Mark;
                 oldGrade.Date = grade.Date;
-                await _gradeRepository.UpdateAsync(grade);
+                await _gradeRepository.UpdateAsync(oldGrade);
                 return true;
             }
             catch

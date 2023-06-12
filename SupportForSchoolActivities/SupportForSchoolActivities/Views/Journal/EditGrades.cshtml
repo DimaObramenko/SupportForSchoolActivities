@@ -1,0 +1,62 @@
+﻿@using SupportForSchoolActivities.Models.ViewModels;
+@model EditGradeVM
+@{
+    ViewData["Title"] = "EditGrades";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1 class="text-center">Редагування оцінок</h1>
+<form asp-action="EditGrades" class="row justify-content-center">
+    <input asp-for="SubjectId" hidden/>
+    <input asp-for="Date" hidden />
+    <table class="table table-bordered table-striped" style="width: 60%;">
+        <thead>
+            <tr>
+                <th class="text-center" width="10%">№</th>
+                <th class="text-center" width="80%">Учень</th>
+                <th class="text-center" width="10%">Оцінка</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Students.Count; i++)
+            {
+                <tr>
+                    <td class="text-center">@(i+1)</td>
+                    <td class="text-center">@(Model.Students[i].LastName) @(Model.Students[i].FirstName)</td>
+                    <td class="text-center">
+                        @if(Model.Grades.Any( g=> g.Student.Id == Model.Students[i].Id))
+                        {
+                            <select name="@Model.Students[i].Id.ToString()" class="form-control">
+                                <option value=""></option>
+                                @foreach (var mark in Model.MarkSelectList)
+                                {
+                                    if(mark.Value == Model.Grades.FirstOrDefault(g=>g.Student.Id == Model.Students[i].Id)?.Mark.ToString())
+                                    {
+                                        <option value="@mark.Value" selected>
+                                            @mark.Text
+                                        </option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@mark.Value">
+                                            @mark.Text
+                                        </option>
+                                    }
+                                }
+                            </select>
+                        }
+                        else
+                        {
+                            <select name="@Model.Students[i].Id.ToString()" asp-items="Model.MarkSelectList" class="form-control">
+                                <option value=""></option>
+                            </select>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="text-center">
+        <input type="submit" value="Зберегти зміни" class="btn btn-primary btn-lg" />
+    </div>
+</form>

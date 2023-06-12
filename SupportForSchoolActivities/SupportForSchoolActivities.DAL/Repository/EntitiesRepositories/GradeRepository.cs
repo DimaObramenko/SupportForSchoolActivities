@@ -21,6 +21,8 @@ namespace SupportForSchoolActivities.DAL.Repository.EntitiesRepositories
             return await _db.Grade
                 .AsNoTracking()
                 .Include(g => g.Student)
+                .Include(g => g.Student.Parent)
+                .Include(g => g.Student.SchoolClass)
                 .Include(g => g.Subject)
                 .ToListAsync();
         }

@@ -41,6 +41,12 @@
                     <td>@(Model.Students[i].LastName) @(Model.Students[i].FirstName)</td>
                     @for (int j = 0; j < Model.DayOfLessons.Count; j++)
                     {
+                        <td>
+                            @if (Model.Grades.Any(g => g.Student.Id == Model.Students[i].Id && g.Date == Model.DayOfLessons[j]))
+                            {                            
+                                @Model.Grades.FirstOrDefault(g => g.Student.Id == Model.Students[i].Id && g.Date == Model.DayOfLessons[j])?.Mark
+                            }
+                        </td>                       
                         <td class="text-center" width="5%"></td>
                     }   
                 </tr>

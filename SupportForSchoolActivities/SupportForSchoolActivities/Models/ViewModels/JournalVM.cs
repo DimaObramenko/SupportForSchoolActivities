@@ -8,5 +8,6 @@ namespace SupportForSchoolActivities.Models.ViewModels
         public string SubjectName { get; set; }
         public List<Student> Students { get; set; }
         public List<DateTime> DayOfLessons { get; set; }
+        public List<Grade> Grades { get; set; }
     }
 }

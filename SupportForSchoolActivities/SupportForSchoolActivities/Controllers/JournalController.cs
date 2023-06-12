@@ -13,13 +13,15 @@ namespace SupportForSchoolActivities.Controllers
         private readonly ISubjectService _subjectService;
         private readonly IStudentService _studentService;
         private readonly IScheduleService _scheduleService;
+        private readonly IGradeService _gradeService;
 
-        public JournalController(ISubjectService subjectService, ISchoolClassService schoolClassService, IStudentService studentService, IScheduleService scheduleService)
+        public JournalController(ISubjectService subjectService, ISchoolClassService schoolClassService, IStudentService studentService, IScheduleService scheduleService, IGradeService gradeService)
         {
             _subjectService = subjectService;
             _schoolClassService = schoolClassService;
             _studentService = studentService;
             _scheduleService = scheduleService;
+            _gradeService = gradeService;
         }
 
         public async Task<IActionResult> Index(int schoolClassId)
@@ -56,12 +58,25 @@ namespace SupportForSchoolActivities.Controllers
             }
             string subjectName = schedules[0].Subject.Name;
             string schoolClassName = schedules[0].SchoolClass.Name;
+            var grades = (await _gradeService.GetAllGrades())
+                .Where(g => g.Subject.Name == subjectName)
+                .ToList();
+            List<Grade> gradeList = new List<Grade>();
+            foreach (var item in grades)
+            {
+                if(item.Student.SchoolClass.Id == schoolClassId)
+                {
+                    gradeList.Add(item);
+                }
+            }
+            grades = grades.Where(g => g.Student.SchoolClass.Id == schoolClassId && g.Subject.Name == subjectName).ToList();
             JournalVM journalVM = new JournalVM()
             {
                 SchoolClassName= schoolClassName,
                 SubjectName= subjectName,
                 Students = students,
-                DayOfLessons = datesWithDayOfWeek
+                DayOfLessons = datesWithDayOfWeek,
+                Grades= grades
             };
             WC.Students = students;
             return View(journalVM);
@@ -114,11 +129,123 @@ namespace SupportForSchoolActivities.Controllers
         {
             var subject = (await _subjectService.GetAllSubjects()).FirstOrDefault(s => s.Name == subjectName);
             List<Student> students = WC.Students;
+            var allGrades = await _gradeService.GetAllGrades();
+            var grades = allGrades.Where(g => g.Subject.Name == subjectName && g.Date == date).ToList();
+            List<SelectListItem> marks = new List<SelectListItem>();
+            for (int i = 1; i <= 12; i++)
+            {
+                marks.Add(new SelectListItem()
+                {
+                    Value = i.ToString(),
+                    Text = i.ToString()
+                });
+            }
 
+            EditGradeVM gradeVM = new EditGradeVM()
+            {
+                SubjectId = subject.Id,
+                Students = students,
+                Date = date,
+                MarkSelectList = marks,
+                Grades = grades
+            };
+            WC.DateForEditMark= date;
 
-            return RedirectToAction(nameof(SelectJournal));
+            return View(gradeVM);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditGrades(EditGradeVM gradeVM)
+        {
+            var date = WC.DateForEditMark;
+            var gradesBeforeEditing = (await _gradeService.GetAllGrades())
+                .Where(g => g.Date == date &&
+                g.Subject.Id == gradeVM.SubjectId)
+                .ToList();
+
+            var form = HttpContext.Request.Form;
+            var formList = form.ToList();
+            Dictionary<string, int> editGradeDic = new Dictionary<string, int>();
+            foreach (var item in formList)
+            {
+                if(item.Value != String.Empty)
+                {
+                    if (int.TryParse(item.Value.ToString(), out int value) && Guid.TryParse(item.Key.ToString(), out Guid key))
+                    {
+                        editGradeDic.Add(item.Key, value);
+                    }
+                }
+            }
+            var gradesAfterEditing = new List<Grade>();
+            
+            foreach (var grade in editGradeDic)
+            {
+                gradesAfterEditing.Add(new Grade()
+                {
+                    Student = await _studentService.GetStudent(grade.Key),
+                    Subject = await _subjectService.GetSubject(gradeVM.SubjectId),
+                    Date = date,
+                    Mark = grade.Value
+                });
+            }
+            int countWithoutChanges = 0;
+            int countWithUpdates = 0;
+            int countAdding = 0;
+            int countDeleting = 0;
+
+            foreach (var grade in gradesBeforeEditing)
+            {
+                if(gradesAfterEditing.Any(g=>
+                    g.Date == grade.Date &&
+                    g.Subject.Id == grade.Subject.Id &&
+                    g.Student.Id == grade.Student.Id))
+                {
+
+                }
+                else
+                {
+                    await _gradeService.DeleteGrade(grade.Id);
+                    countDeleting++;
+                }
+            }
+
+            foreach (var grade in gradesAfterEditing)
+            {
+                if (gradesBeforeEditing.Any(g =>
+                    g.Date == grade.Date &&
+                    g.Subject.Id == grade.Subject.Id &&
+                    g.Student.Id == grade.Student.Id))
+                {
+                    if (gradesBeforeEditing.Any(g =>
+                        g.Date == grade.Date &&
+                        g.Subject.Id == grade.Subject.Id &&
+                        g.Student.Id == grade.Student.Id &&
+                        g.Mark == grade.Mark))
+                    {
+                        countWithoutChanges++;
+                    }
+                    else
+                    {
+                        var editGrade = gradesBeforeEditing.FirstOrDefault(g =>
+                            g.Date == grade.Date &&
+                            g.Subject.Id == grade.Subject.Id &&
+                            g.Student.Id == grade.Student.Id);
+                        await _gradeService.UpdateGrade(editGrade.Id, grade);
+                        countWithUpdates++;
+                    }
+                }
+                else
+                {
+                    await _gradeService.CreateGrade(grade);
+                    countAdding++;
+                }
+            }
+
+
+            return RedirectToAction("Index", new { schoolClassId = 3 });
+            //return View(gradeVM);
+        }
 
         public static IEnumerable<DateTime> EachDay(DateTime startDate, DateTime endDate)
         {

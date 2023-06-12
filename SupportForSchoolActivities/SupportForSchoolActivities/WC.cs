@@ -13,5 +13,6 @@ namespace SupportForSchoolActivities
         public static List<Student> Students = new List<Student>();
         public static DateTime BeginningOfSchoolYear = new DateTime(2023, 9, 1);
         public static DateTime EndOfSchoolYear = new DateTime(2023, 10, 30);
+        public static DateTime DateForEditMark;
     }
 }

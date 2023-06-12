@@ -66,6 +66,10 @@ namespace SupportForSchoolActivities.Service
         public async Task<List<Student>> GetAllStudents()
         {
             var students = await _studentRepository.SelectAsync();
+            students = students.OrderBy(s => s.SchoolClass.Name)
+                .ThenBy(s => s.LastName)
+                .ThenBy(s => s.FirstName)
+                .ToList();
             return students;
         }
 
