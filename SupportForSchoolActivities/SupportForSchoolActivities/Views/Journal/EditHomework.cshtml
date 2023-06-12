@@ -1,0 +1,80 @@
+﻿@using SupportForSchoolActivities.Models.ViewModels;
+@model HomeworkVM
+@{
+    ViewData["Title"] = "EditHomework";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@*<div class="d-flex align-items-center justify-content-center">
+    <div class="align-content-center rounded p-3 shadow-sm btn btn-light" style="margin: 0 5px;">
+        <h2>Домашнє завдання на @Model.Date.ToString("dd/MM")</h2>
+    </div>
+</div>*@
+
+<section class="vh-100">
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center ">
+            <div class="col-lg-12 col-xl-11">
+                <div class="card text-black" style="border-radius: 25px;">
+                    <div class="card-body p-md-5">
+                        <div class="row justify-content-center">
+                            <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <div class="align-content-center rounded p-3 shadow-sm btn btn-light" style="margin: 0 5px;">
+                                        <h2>Домашнє завдання на @Model.Date.ToString("dd/MM")</h2>
+                                    </div>  
+                                </div>
+                                <br /><br /><br />
+                                <form class="mx-1 mx-md-4" asp-action="EditHomework">
+                                    <input asp-for="SubjectId" hidden />
+                                    <input asp-for="SchoolClassId" hidden />
+                                    @if(Model.Homework == null)
+                                    {
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                            <div class="form-outline flex-fill mb-0">
+                                                <input asp-for="Description" placeholder="Домашнє завдання" class="form-control" />
+                                                <span asp-validation-for="Description" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="Homework.Id" hidden/>
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                            <div class="form-outline flex-fill mb-0">
+                                                <input asp-for="@Model.Homework.Description" placeholder="Домашнє завдання" class="form-control" />
+                                                <span asp-validation-for="@Model.Homework.Description" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    }
+                                    <div class="text-center">
+                                        <input type="submit" value="Зберегти зміни" class="btn btn-primary btn-lg" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@*<form asp-action="EditHomework" class="row justify-content-center">
+    <input asp-for="SubjectId" hidden />
+    <input asp-for="SchoolClassId" hidden />
+    <input asp-for="Date" hidden />
+    <div class="d-flex flex-row align-items-center mb-4">
+        <div class="form-outline flex-fill mb-0">
+            <input asp-for="Description" placeholder="Домашнє завдання" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="text-center">
+        <input type="submit" value="Зберегти зміни" class="btn btn-primary btn-lg" />
+    </div>
+</form>*@
+
+
+
+

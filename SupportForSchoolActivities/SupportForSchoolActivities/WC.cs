@@ -14,5 +14,7 @@ namespace SupportForSchoolActivities
         public static DateTime BeginningOfSchoolYear = new DateTime(2023, 9, 1);
         public static DateTime EndOfSchoolYear = new DateTime(2023, 10, 30);
         public static DateTime DateForEditMark;
+        public static int ClassNumberForJournal;
+        public static DateTime DatetForHomework;
     }
 }

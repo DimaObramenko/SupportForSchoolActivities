@@ -17,16 +17,16 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <td></td>
-                <td></td>
-                <td>Учень</td>
+                <th></th>
+                <th></td>
+                <th class="text-center align-middle">Учень</th>
                 @for (int i = 0; i < Model.DayOfLessons.Count; i++)
                 {
-                    <td class="text-center" width="5%">
+                    <th class="text-center" width="5%">
                         <a asp-action="EditGrades" asp-route-date="@Model.DayOfLessons[i].ToString("yyyy-MM-dd")" asp-route-subjectName="@Model.SubjectName" class="btn btn-light mx-2">
                             @Model.DayOfLessons[i].ToString("dd/MM")
                         </a>                       
-                    </td>
+                    </th>
                 }             
             </tr>
         </thead>
@@ -35,19 +35,18 @@
             {
                 <tr>
                     <td>
-                        <a class="btn btn-light">i</a>
+                        <a asp-action="InformationAboutStudent" asp-route-id="@Model.Students[i].Id" class="btn btn-light">i</a>
                     </td>
                     <td>@(i+1)</td>
                     <td>@(Model.Students[i].LastName) @(Model.Students[i].FirstName)</td>
                     @for (int j = 0; j < Model.DayOfLessons.Count; j++)
                     {
-                        <td>
+                        <td class="text-center align-middle">
                             @if (Model.Grades.Any(g => g.Student.Id == Model.Students[i].Id && g.Date == Model.DayOfLessons[j]))
                             {                            
                                 @Model.Grades.FirstOrDefault(g => g.Student.Id == Model.Students[i].Id && g.Date == Model.DayOfLessons[j])?.Mark
                             }
-                        </td>                       
-                        <td class="text-center" width="5%"></td>
+                        </td>                                               
                     }   
                 </tr>
             }
@@ -58,7 +57,7 @@
                 @for (int i = 0; i < Model.DayOfLessons.Count; i++)
                 {
                     <td class="text-center" width="5%">
-                        <a class="btn btn-light">ДЗ</a>
+                        <a asp-action="EditHomework" asp-route-date="@Model.DayOfLessons[i].ToString("yyyy-MM-dd")" asp-route-schoolClassName="@Model.SchoolClassName" asp-route-subjectName="@Model.SubjectName" class="btn btn-light">ДЗ</a>
                     </td>
                 }  
                 </tr>

@@ -14,14 +14,16 @@ namespace SupportForSchoolActivities.Controllers
         private readonly IStudentService _studentService;
         private readonly IScheduleService _scheduleService;
         private readonly IGradeService _gradeService;
+        private readonly IHomeworkService _homeworkService;
 
-        public JournalController(ISubjectService subjectService, ISchoolClassService schoolClassService, IStudentService studentService, IScheduleService scheduleService, IGradeService gradeService)
+        public JournalController(ISubjectService subjectService, ISchoolClassService schoolClassService, IStudentService studentService, IScheduleService scheduleService, IGradeService gradeService, IHomeworkService homeworkService)
         {
             _subjectService = subjectService;
             _schoolClassService = schoolClassService;
             _studentService = studentService;
             _scheduleService = scheduleService;
             _gradeService = gradeService;
+            _homeworkService = homeworkService;
         }
 
         public async Task<IActionResult> Index(int schoolClassId)
@@ -121,6 +123,7 @@ namespace SupportForSchoolActivities.Controllers
                 .ToList();
 
             WC.Schedules = schedules;
+            WC.ClassNumberForJournal = subjectClassVM.SchoolClassId;
             return RedirectToAction("Index", new { schoolClassId = subjectClassVM.SchoolClassId });
         }
 
@@ -242,10 +245,69 @@ namespace SupportForSchoolActivities.Controllers
                 }
             }
 
-
-            return RedirectToAction("Index", new { schoolClassId = 3 });
+            //перенаправлення на клас 1-А
+            return RedirectToAction("Index", new { schoolClassId = WC.ClassNumberForJournal });
             //return View(gradeVM);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> EditHomework(DateTime date, string schoolClassName, string subjectName)
+        {
+            var subject = (await _subjectService.GetAllSubjects()).FirstOrDefault(s => s.Name == subjectName);
+            var schoolClass = (await _schoolClassService.GetAllClasses()).FirstOrDefault(c => c.Name == schoolClassName);
+            var homework = (await _homeworkService.GetAllHomeworks())
+                .FirstOrDefault(s => s.Deadline == date && 
+                    s.Subject.Name == subjectName &&
+                    s.SchoolClass.Name == schoolClassName);
+
+            HomeworkVM homeworkVM = new HomeworkVM()
+            {
+                Homework = homework,
+                SchoolClassId = schoolClass.Id,
+                SubjectId = subject.Id,
+                Date = date
+            };
+            WC.DatetForHomework = date;
+            return View(homeworkVM);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditHomework(HomeworkVM homeworkVM)
+        {
+            var date = WC.DatetForHomework;
+            var homework = new Homework()
+            {
+                SchoolClass = await _schoolClassService.GetClass(homeworkVM.SchoolClassId),
+                Subject = await _subjectService.GetSubject(homeworkVM.SubjectId),
+                Deadline = date
+            };
+            if (homeworkVM.Homework == null)
+            {
+                homework.Description = homeworkVM.Description;
+                await _homeworkService.CreateHomework(homework);
+            }
+            else
+            {
+                if (homeworkVM.Homework.Description == null)
+                {
+                    await _homeworkService.DeleteHomework(homeworkVM.Homework.Id);
+                }
+                else
+                {
+                    homework.Description = homeworkVM.Homework.Description;
+                    await _homeworkService.UpdateHomework(homeworkVM.Homework.Id, homework);
+                }
+            }
+            return RedirectToAction("Index", new { schoolClassId = WC.ClassNumberForJournal });
+        }
+
+        public async Task<IActionResult> InformationAboutStudent(string id)
+        {
+
+        }
+
 
         public static IEnumerable<DateTime> EachDay(DateTime startDate, DateTime endDate)
         {
