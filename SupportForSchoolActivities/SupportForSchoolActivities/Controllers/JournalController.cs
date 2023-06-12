@@ -15,8 +15,9 @@ namespace SupportForSchoolActivities.Controllers
         private readonly IScheduleService _scheduleService;
         private readonly IGradeService _gradeService;
         private readonly IHomeworkService _homeworkService;
+        private readonly IRemarkService _remarkService;
 
-        public JournalController(ISubjectService subjectService, ISchoolClassService schoolClassService, IStudentService studentService, IScheduleService scheduleService, IGradeService gradeService, IHomeworkService homeworkService)
+        public JournalController(ISubjectService subjectService, ISchoolClassService schoolClassService, IStudentService studentService, IScheduleService scheduleService, IGradeService gradeService, IHomeworkService homeworkService, IRemarkService remarkService)
         {
             _subjectService = subjectService;
             _schoolClassService = schoolClassService;
@@ -24,6 +25,7 @@ namespace SupportForSchoolActivities.Controllers
             _scheduleService = scheduleService;
             _gradeService = gradeService;
             _homeworkService = homeworkService;
+            _remarkService = remarkService;
         }
 
         public async Task<IActionResult> Index(int schoolClassId)
@@ -303,11 +305,46 @@ namespace SupportForSchoolActivities.Controllers
             return RedirectToAction("Index", new { schoolClassId = WC.ClassNumberForJournal });
         }
 
+        [HttpGet]
         public async Task<IActionResult> InformationAboutStudent(string id)
         {
-            return View();
+            var student = await _studentService.GetStudent(id);
+            var remarks = (await _remarkService.GetAllRemarks()).Where(r => r.Student.Id == id).ToList();
+            RemarkVM remarkVM = new RemarkVM()
+            {
+                Student= student,
+                Remarks = remarks,
+                StudentId = id,
+                Date = DateTime.Now,
+            };
+            return View(remarkVM);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> InformationAboutStudent(RemarkVM remarkVM)
+        {
+            if(remarkVM.Description != null)
+            {
+                var remark = new Remark()
+                {
+                    Description = remarkVM.Description,
+                    Date = remarkVM.Date,
+                    Student = await _studentService.GetStudent(remarkVM.StudentId)
+                };
+                await _remarkService.CreateRemark(remark);
+            }
+            return RedirectToAction("Index", new { schoolClassId = WC.ClassNumberForJournal });
+        }
+
+        public async Task<IActionResult> DeleteRemark(int id)
+        {
+            if(id != 0)
+            {
+                await _remarkService.DeleteRemark(id);
+            }
+            return RedirectToAction("Index", new { schoolClassId = WC.ClassNumberForJournal });
+        }
 
         public static IEnumerable<DateTime> EachDay(DateTime startDate, DateTime endDate)
         {
