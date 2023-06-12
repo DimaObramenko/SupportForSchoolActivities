@@ -305,7 +305,7 @@ namespace SupportForSchoolActivities.Controllers
 
         public async Task<IActionResult> InformationAboutStudent(string id)
         {
-
+            return View();
         }
 
 
