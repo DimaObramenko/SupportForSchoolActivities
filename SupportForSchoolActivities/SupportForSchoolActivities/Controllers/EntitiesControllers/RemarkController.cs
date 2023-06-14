@@ -18,10 +18,11 @@ namespace SupportForSchoolActivities.Controllers.EntitiesControllers
             _parentService = parentService;
         }
 
-        public async Task<IActionResult> Index(string parentId)
+        public async Task<IActionResult> Index(string id)
         {
-            var parent = await _parentService.GetParent(parentId);
-            var student = (await _studentService.GetAllStudents()).FirstOrDefault(s => s.Parent.Id == parentId);
+            //var parent = await _parentService.GetParent(parentId);
+            //var student = (await _studentService.GetAllStudents()).FirstOrDefault(s => s.Parent.Id == parentId);
+            var student = await _studentService.GetStudent(id);
             var remarks = (await _remarkService.GetAllRemarks()).Where(r => r.Student.Id == student?.Id).ToList();
 
             RemarkVM remarkVM = new RemarkVM()

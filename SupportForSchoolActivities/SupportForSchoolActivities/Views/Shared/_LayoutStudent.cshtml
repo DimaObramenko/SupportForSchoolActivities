@@ -31,7 +31,18 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Diary" asp-action="Index">Щоденник</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Адміністрування</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="StudentProgressTable" asp-action="Index">Таблиця успішності</a>
+                        </li>
+                        @if(WC.TempRole == WC.TeacherRole)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-route-id="@WC.StudentId" asp-controller="Remark" asp-action="Index">Зауваження</a>
+                            </li>
+                        }
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="#">Вийти</a>
                         </li>
                     </ul>
                 </div>

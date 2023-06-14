@@ -18,5 +18,7 @@ namespace SupportForSchoolActivities
         public static DateTime DatetForHomework;
         public static DateTime WeekStartDate = new DateTime(2023, 9, 4);
         public static DateTime WeekEndDate = new DateTime(2023, 9, 10);
+        public static string TempRole;
+        public static string StudentId;
     }
 }
