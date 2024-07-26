@@ -16,9 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-//отримуємо рядок підключення з файлу конфігурації
 string connection = builder.Configuration.GetConnectionString("DefaultConnection");
-//додаємо контекст ApplicationDbContext в якості сервісу в додатку 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection));
 
 builder.Services.AddIdentity<User, IdentityRole>()
@@ -62,10 +60,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Admin}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=Index}/{id?}");
 
 app.Run();

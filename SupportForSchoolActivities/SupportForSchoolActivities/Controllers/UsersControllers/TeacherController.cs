@@ -1,15 +1,19 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SupportForSchoolActivities.DAL;
 using SupportForSchoolActivities.Domain.Entity;
 using SupportForSchoolActivities.Models.RegisterModels;
+using SupportForSchoolActivities.Service;
 using SupportForSchoolActivities.Service.Interfaces;
 using SupportForSchoolActivities.Service.Interfaces.EntityInterfaces;
+using System.Data;
 
 namespace SupportForSchoolActivities.Controllers.UsersControllers
 {
+    [Authorize(Roles = WC.AdminRole)]
     public class TeacherController : Controller
     {
         private readonly ITeacherService _teacherService;
@@ -55,17 +59,8 @@ namespace SupportForSchoolActivities.Controllers.UsersControllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Upsert(TeacherVM teacherVM)
         {
-            /*teacher.Subjects = (await _subjectService.GetAllSubjects())
-                .Where(s => teacherVM.SelectedSubjectsIds.Contains(s.Id))
-                .ToList();
-            */
             var teacher = _mapper.Map<Teacher>(teacherVM.Teacher);
             teacher.Subjects = _db.Subject.Where(s => teacherVM.SelectedSubjectsIds.Contains(s.Id)).ToList();
-
-            /*var teacher = _mapper.Map<Teacher>(teacherVM.Teacher);
-            var allSubjects = await _subjectService.GetAllSubjects();
-            var subjects = allSubjects.Where(s => teacherVM.SelectedSubjectsIds.Contains(s.Id)).ToList();
-            teacher.Subjects = subjects;*/
             
             var result = await _userManager.CreateAsync(teacher, teacherVM.Teacher.Password);
             if (result.Succeeded)
@@ -80,27 +75,11 @@ namespace SupportForSchoolActivities.Controllers.UsersControllers
             return View(teacherVM);
         }
 
-        public async Task<IActionResult> CreateTeacher()
+        public async Task<IActionResult> Delete(string id)
         {
-            Teacher teacher = new Teacher()
+            if (await _teacherService.DeleteTeacher(id))
             {
-                FirstName = "Tea",
-                LastName = "Tea",
-                Subjects = new List<Subject>()
-                {
-                    new Subject()
-                    {
-                        Name = "Математика"
-                    },
-                    new Subject()
-                    {
-                        Name = "Фізика"
-                    }
-                }
-            };
-            if(await _teacherService.CreateTeacher(teacher))
-            {
-                return RedirectToAction("Privacy", "Home");
+                return RedirectToAction("Index", "Teacher");
             }
             else
             {

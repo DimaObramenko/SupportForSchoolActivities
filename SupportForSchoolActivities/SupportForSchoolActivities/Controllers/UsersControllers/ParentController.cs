@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SupportForSchoolActivities.Domain.Entity;
 using SupportForSchoolActivities.Service.Interfaces;
+using System.Data;
 
 namespace SupportForSchoolActivities.Controllers.UsersControllers
 {
+    [Authorize(Roles = WC.AdminRole)]
     public class ParentController : Controller
     {
         private readonly IParentService _parentService;

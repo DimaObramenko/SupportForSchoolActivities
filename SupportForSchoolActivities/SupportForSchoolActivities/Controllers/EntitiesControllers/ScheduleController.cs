@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SupportForSchoolActivities.Domain.Entity;
 using SupportForSchoolActivities.Models.ViewModels;
 using SupportForSchoolActivities.Service.Interfaces.EntityInterfaces;
+using System.Data;
 
 namespace SupportForSchoolActivities.Controllers.EntitiesControllers
 {
+    [Authorize(Roles = WC.AdminRole)]
     public class ScheduleController : Controller
     {
         private readonly IScheduleService _scheduleService;
@@ -221,10 +224,6 @@ namespace SupportForSchoolActivities.Controllers.EntitiesControllers
             };
             try
             {
-                /*foreach (var schedule in schedules)
-                {
-                    await _scheduleService.CreateSchedule(schedule);
-                }*/
                 await _scheduleService.CreateSchedule(schedule1);
             }
             catch

@@ -17,7 +17,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <a class="navbar-brand" href="#">
                     <div>
                         <img style="width: 20px; height:20px" src="~/images/study.png" asp-append-version="true" />
                     </div>
@@ -47,7 +47,7 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="#">Вийти</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">Вийти</a>
                         </li>
                     </ul>
                 </div>

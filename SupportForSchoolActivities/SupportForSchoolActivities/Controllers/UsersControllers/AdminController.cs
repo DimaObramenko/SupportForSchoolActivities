@@ -1,13 +1,16 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SupportForSchoolActivities.Domain.Entity;
 using SupportForSchoolActivities.Models.RegisterModels;
 using SupportForSchoolActivities.Service.Interfaces;
+using System.Data;
 
 namespace SupportForSchoolActivities.Controllers.UsersControllers
 {
+    [Authorize(Roles = WC.AdminRole)]
     public class AdminController : Controller
     {
         private readonly IAdminService _adminService;
@@ -56,15 +59,12 @@ namespace SupportForSchoolActivities.Controllers.UsersControllers
 
         public async Task<IActionResult> Delete(string id)
         {
-            if (await _adminService.DeleteAdmin(id))
+            var admins = await _adminService.GetListAdmins();
+            if(admins.Count > 1 && id != WC.CurrentAdmin.Id)
             {
-                return RedirectToAction("Index", "Admin");
+                await _adminService.DeleteAdmin(id);
             }
-            else
-            {
-                return RedirectToAction("Error", "Home");
-            }
-            
+            return RedirectToAction("Index", "Admin");
         }
     }
 }

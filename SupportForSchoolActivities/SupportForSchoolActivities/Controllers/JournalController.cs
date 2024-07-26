@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SupportForSchoolActivities.Domain.Entity;
 using SupportForSchoolActivities.Models.ViewModels;
 using SupportForSchoolActivities.Service.Interfaces;
 using SupportForSchoolActivities.Service.Interfaces.EntityInterfaces;
+using System.Data;
 
 namespace SupportForSchoolActivities.Controllers
 {
+    [Authorize(Roles = WC.TeacherRole)]
     public class JournalController : Controller
     {
         private readonly ISchoolClassService _schoolClassService;
@@ -44,8 +47,8 @@ namespace SupportForSchoolActivities.Controllers
                 dayOfLessons.Add(schedule.DayOfWeek);
             }
 
-            DateTime startDate = WC.BeginningOfSchoolYear; // Початкова дата
-            DateTime endDate = WC.EndOfSchoolYear; // Кінцева дата
+            DateTime startDate = WC.BeginningOfSchoolYear;
+            DateTime endDate = WC.EndOfSchoolYear;
 
             List<DateTime> datesWithDayOfWeek = new List<DateTime>();
 
@@ -59,6 +62,10 @@ namespace SupportForSchoolActivities.Controllers
                         datesWithDayOfWeek.Add(date);
                     }
                 }
+            }
+            if (schedules.Count == 0)
+            {
+                return RedirectToAction("SelectJournal");
             }
             string subjectName = schedules[0].Subject.Name;
             string schoolClassName = schedules[0].SchoolClass.Name;
@@ -93,7 +100,7 @@ namespace SupportForSchoolActivities.Controllers
             schoolClasses = schoolClasses.OrderBy(s => s.ClassNumber)
                 .ThenBy(s => s.Name)
                 .ToList();
-            var subjects = await _subjectService.GetAllSubjects();
+            var subjects = (await _subjectService.GetAllSubjects()).Where(s => s.Teachers.Any(t => t.Id == WC.CurrentTeacher.Id)).ToList();
             SubjectSchoolClassVM subjectClassVM = new SubjectSchoolClassVM()
             {
                 SchoolClassSelectList = schoolClasses.Select(c=> new SelectListItem
@@ -247,9 +254,7 @@ namespace SupportForSchoolActivities.Controllers
                 }
             }
 
-            //перенаправлення на клас 1-А
             return RedirectToAction("Index", new { schoolClassId = WC.ClassNumberForJournal });
-            //return View(gradeVM);
         }
 
         [HttpGet]

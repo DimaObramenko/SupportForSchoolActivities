@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -6,9 +7,11 @@ using SupportForSchoolActivities.Domain.Entity;
 using SupportForSchoolActivities.Models.RegisterModels;
 using SupportForSchoolActivities.Service.Interfaces;
 using SupportForSchoolActivities.Service.Interfaces.EntityInterfaces;
+using System.Data;
 
 namespace SupportForSchoolActivities.Controllers.UsersControllers
 {
+    [Authorize(Roles = WC.AdminRole)]
     public class StudentController : Controller
     {
         private readonly IStudentService _studentService;
@@ -41,6 +44,9 @@ namespace SupportForSchoolActivities.Controllers.UsersControllers
         public async Task<IActionResult> Upsert()
         {
             var schoolClasses = await _schoolClassService.GetAllClasses();
+            schoolClasses = schoolClasses.OrderBy(s => s.ClassNumber)
+                .ThenBy(s => s.Name)
+                .ToList();
             StudentVM studentVM = new StudentVM()
             {
                 Student = new UserRegister(),

@@ -20,5 +20,7 @@ namespace SupportForSchoolActivities
         public static DateTime WeekEndDate = new DateTime(2023, 9, 10);
         public static string TempRole;
         public static string StudentId;
+        public static Teacher CurrentTeacher;
+        public static Admin CurrentAdmin;
     }
 }

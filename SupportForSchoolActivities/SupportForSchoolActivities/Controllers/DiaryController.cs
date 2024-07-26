@@ -2,9 +2,12 @@
 using SupportForSchoolActivities.Service.Interfaces.EntityInterfaces;
 using SupportForSchoolActivities.Service.Interfaces;
 using SupportForSchoolActivities.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace SupportForSchoolActivities.Controllers
 {
+    [Authorize(Roles = WC.StudentRole + "," + WC.ParentRole)]
     public class DiaryController : Controller
     {
         private readonly IStudentService _studentService;
@@ -43,7 +46,7 @@ namespace SupportForSchoolActivities.Controllers
                 WC.WeekEndDate = nextWeekEndDate;
             }
 
-            var student = (await _studentService.GetAllStudents()).FirstOrDefault(s => s.Id == id);
+            var student = (await _studentService.GetAllStudents()).FirstOrDefault(s => s.Id == WC.StudentId);
             var schoolClass = (await _schoolClassService.GetClass(student.SchoolClass.Id));
             var schedules = (await _scheduleService.GetAllSchedules()).Where(s => s.SchoolClass.Id == schoolClass.Id).ToList();
             var grades = (await _gradeService.GetAllGrades())
