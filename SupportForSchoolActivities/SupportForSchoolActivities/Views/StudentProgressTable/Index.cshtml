@@ -1,0 +1,51 @@
+﻿@using SupportForSchoolActivities.Models.ViewModels;
+@model StudentProgressVM
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+}
+
+<div class="d-flex align-items-center justify-content-center">
+    <div class="align-content-center rounded p-3 shadow-sm btn btn-light" style="margin: 0 5px;">
+        <h2 class="text-center">Таблиця успішності</h2>
+        <h3 class="text-center">@(Model.Student.LastName) @(Model.Student.FirstName)</h3>
+    </div>
+</div>
+<br />
+<br />
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>№</th>
+                <th class="text-center align-middle">Предмет</th>
+                @for (int i = 0; i < Model.DateList.Count; i++)
+                {
+                    <th class="text-center" width="5%">                        
+                            @Model.DateList[i].ToString("dd/MM")                        
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Subjects.Count(); i++)
+            {
+                <tr>
+                    <td class="text-center">@(i + 1)</td>
+                    <td>@Model.Subjects[i].Name</td>
+                    @for (int j = 0; j < Model.DateList.Count; j++)
+                    {
+                        <td class="text-center align-middle">
+                            @if(Model.Grades.Any(g => g.Date == Model.DateList[j] && g.Subject.Name == Model.Subjects[i].Name))
+                            {
+                                @Model.Grades.FirstOrDefault(g => g.Date == Model.DateList[j] && g.Subject.Name == Model.Subjects[i].Name)?.Mark
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

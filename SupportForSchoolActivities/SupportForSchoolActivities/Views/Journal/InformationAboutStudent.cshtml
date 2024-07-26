@@ -1,0 +1,131 @@
+﻿@using SupportForSchoolActivities.Models.ViewModels;
+@model RemarkVM
+@{
+    ViewData["Title"] = "InformationAboutStudent";
+    Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+}
+
+<h1 class="text-center">@(Model.Student.LastName) @(Model.Student.FirstName)</h1>
+
+<section class="vh-100">
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center ">
+            <div class="col-lg-12 col-xl-11">
+                <div class="card text-black" style="border-radius: 25px;">
+                    <div class="card-body p-md-5">
+                        <div class="row justify-content-center">
+                            <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                                <form asp-action="InformationAboutStudent" class="mx-1 mx-md-4">
+                                    <input asp-for="StudentId" hidden />
+                                    @if (Model.Remarks.Count > 0)
+                                    {
+                                        <table class="table table-bordered table-striped" >
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center" width="10%">№</th>
+                                                    <th class="text-center" width="15%">Дата</th>
+                                                    <th class="text-center" width="60%">Зауваження</th>
+                                                    <th class="text-center" width="15%"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @for (int i = 0; i < Model.Remarks.Count; i++)
+                                                {
+                                                    <tr>
+                                                        <td class="text-center">@(i + 1)</td>
+                                                        <td class="text-center">@Model.Remarks[i].Date.ToString("dd/MM")</td>
+                                                        <td class="text-center">@Model.Remarks[i].Description</td>
+                                                        <td>
+                                                            <a asp-action="DeleteRemark" asp-route-id="@Model.Remarks[i].Id" class="btn btn-danger mx-2">Видалити</a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    }
+                                    else
+                                    {
+                                        <br />
+                                        <br />
+                                        <h2>Зауважень поки немає</h2>
+                                    }
+                                    <br /><br />
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <h3 class="text-center">Додати зауваження</h3>                                       
+                                    </div>
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input asp-for="Description" placeholder="Зауваження" class="form-control" />
+                                            <span asp-validation-for="Description" class="text-danger"></span>
+                                        </div>                                       
+                                    </div>
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input asp-for="@Model.Date" type="date" min="2023-09-01" max="2024-05-31" placeholder="Дата" class="form-control" />
+                                            <span asp-validation-for="@Model.Date" class="text-danger"></span>
+                                        </div>                                     
+                                    </div>                                    
+                                    <div class="text-center">
+                                        <input type="submit" value="Зберегти зміни" class="btn btn-primary btn-lg" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@*<form asp-action="InformationAboutStudent" class="row justify-content-center">
+    <input asp-for="StudentId" hidden />
+    <input asp-for="Date" hidden />
+    @if(Model.Remarks.Count > 0)
+    {
+        <table class="table table-bordered table-striped" style="width: 60%;">
+            <thead>
+            <tr>
+                    <th class="text-center" width="10%">№</th>
+                    <th class="text-center" width="15%">Дата</th>
+                    <th class="text-center" width="60%">Зауваження</th>
+                    <th class="text-center" width="15%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Remarks.Count; i++)
+                {
+                    <tr>
+                        <td class="text-center">@(i + 1)</td>
+                        <td class="text-center">@Model.Remarks[i].Date.ToString("dd/MM")</td>
+                        <td class="text-center">@Model.Remarks[i].Description</td>
+                        <td>
+                             <a asp-action="Delete" asp-route-id="@Model.StudentId" class="btn btn-danger mx-2">Видалити</a>
+                        </td>
+                    </tr>    
+                }
+            </tbody>
+        </table>
+        
+    }
+    else
+    {
+        <br />
+        <br />
+        <h2>Зауважень поки немає</h2>
+    }
+    <br /><br />
+    <div class="d-flex flex-row align-items-center mb-4">
+        <div class="form-outline flex-fill mb-0">
+            <input asp-for="Description" placeholder="Зауваження" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="form-outline flex-fill mb-0">
+            <input asp-for="Date" type="date" placeholder="Дата" class="form-control" />
+            <span asp-validation-for="Date" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="text-center">
+        <input type="submit" value="Зберегти зміни" class="btn btn-primary btn-lg" />
+    </div>
+</form>*@

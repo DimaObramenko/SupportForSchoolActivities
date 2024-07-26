@@ -1,0 +1,325 @@
+﻿@using SupportForSchoolActivities.Models.ViewModels;
+@model DiaryVM
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+}
+
+
+<div class="d-flex align-items-center justify-content-center">
+    @*<button class="btn btn-light mr-2"><</button>*@
+    <a asp-action="Index" asp-route-id="@Model.StudentId" asp-route-weekOffset="@((int)-1)" class="btn btn-light ml-2"> < </a>
+    <div class="align-content-center rounded p-3 shadow-sm btn btn-light" style="margin: 0 5px;">
+        <h2 class="text-center">@WC.WeekStartDate.ToString("dd/MM") - @WC.WeekEndDate.ToString("dd/MM")</h2>
+    </div>
+    <a asp-action="Index" asp-route-id="@Model.StudentId" asp-route-weekOffset="@((int)1)"class="btn btn-light ml-2"> > </a>
+    @*<button class="btn btn-light ml-2">></button>*@
+</div>
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Понеділок</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th class="text-center" width="5%">№</th>
+                        <th class="text-center" width="35%">Предмет</th>
+                        <th class="text-center" width="48%">Домашнє завдання</th>
+                        <th class="text-center" width="12%">Оцінка</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 1; i <= WC.NumberOfLessons; i++)
+                    {
+                        <tr>
+                            <td class="text-center">@i</td>
+                            @if (Model.Schedules.Any(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Monday))
+                            {
+                                <td>
+                                    @Model.Schedules.FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Monday)?.Subject.Name
+                                </td>
+                                <td>
+                                    @if (Model.Homeworks.Any(h => h.Subject.Name == Model.Schedules.FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Monday)?.Subject.Name && h.Deadline == Model.Dates.FirstOrDefault(d => d.DayOfWeek == DayOfWeek.Monday)))
+                                    {
+                                        @Model.Homeworks.FirstOrDefault(h => h.Subject.Name == Model.Schedules
+                                            .FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Monday)?.Subject.Name &&
+                                            h.Deadline == Model.Dates.FirstOrDefault(d => d.DayOfWeek == DayOfWeek.Monday))?.Description
+                                    }
+                                </td>
+                                <td>
+                                    @if (Model.Grades.Any(g => g.Subject.Name == Model.Schedules.FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Monday)?.Subject.Name && g.Date == Model.Dates.FirstOrDefault(d => d.DayOfWeek == DayOfWeek.Monday)))
+                                    {
+                                        @Model.Grades.FirstOrDefault(g => g.Subject.Name == Model.Schedules
+                                            .FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Monday)?.Subject.Name &&
+                                            g.Date == Model.Dates.FirstOrDefault(d => d.DayOfWeek == DayOfWeek.Monday))?.Mark
+                                    }
+                                </td>
+                            }
+                            else
+                            {
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <h4>Четвер</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th class="text-center" width="5%">№</th>
+                        <th class="text-center" width="35%">Предмет</th>
+                        <th class="text-center" width="48%">Домашнє завдання</th>
+                        <th class="text-center" width="12%">Оцінка</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 1; i <= WC.NumberOfLessons; i++)
+                    {
+                        <tr>
+                            <td class="text-center">@i</td>
+                            @if (Model.Schedules.Any(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Thursday))
+                            {
+                                <td>
+                                    @Model.Schedules.FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Thursday)?.Subject.Name
+                                </td>
+                                <td>
+                                    @if (Model.Homeworks.Any(h => h.Subject.Name == Model.Schedules.FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Thursday)?.Subject.Name && h.Deadline == Model.Dates.FirstOrDefault(d => d.DayOfWeek == DayOfWeek.Thursday)))
+                                    {
+                                        @Model.Homeworks.FirstOrDefault(h => h.Subject.Name == Model.Schedules
+                                            .FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Thursday)?.Subject.Name &&
+                                            h.Deadline == Model.Dates.FirstOrDefault(d => d.DayOfWeek == DayOfWeek.Thursday))?.Description
+                                    }
+                                </td>
+                                <td>
+                                    @if (Model.Grades.Any(g => g.Subject.Name == Model.Schedules.FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Thursday)?.Subject.Name && g.Date == Model.Dates.FirstOrDefault(d => d.DayOfWeek == DayOfWeek.Thursday)))
+                                    {
+                                        @Model.Grades.FirstOrDefault(g => g.Subject.Name == Model.Schedules
+                                            .FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Thursday)?.Subject.Name &&
+                                            g.Date == Model.Dates.FirstOrDefault(d => d.DayOfWeek == DayOfWeek.Thursday))?.Mark
+                                    }
+                                </td>
+                            }
+                            else
+                            {
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br /><br />
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Вівторок</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th class="text-center" width="5%">№</th>
+                        <th class="text-center" width="35%">Предмет</th>
+                        <th class="text-center" width="48%">Домашнє завдання</th>
+                        <th class="text-center" width="12%">Оцінка</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 1; i <= WC.NumberOfLessons; i++)
+                    {
+                        <tr>
+                            <td class="text-center">@i</td>
+                            @if (Model.Schedules.Any(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Tuesday))
+                            {
+                                <td>
+                                    @Model.Schedules.FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Tuesday)?.Subject.Name
+                                </td>
+                                <td>
+                                    @if (Model.Homeworks.Any(h => h.Subject.Name == Model.Schedules.FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Tuesday)?.Subject.Name && h.Deadline == Model.Dates.FirstOrDefault(d => d.DayOfWeek == DayOfWeek.Tuesday)))
+                                    {
+                                        @Model.Homeworks.FirstOrDefault(h => h.Subject.Name == Model.Schedules
+                                            .FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Tuesday)?.Subject.Name &&
+                                            h.Deadline == Model.Dates.FirstOrDefault(d => d.DayOfWeek == DayOfWeek.Tuesday))?.Description
+                                    }
+                                </td>
+                                <td>
+                                    @if (Model.Grades.Any(g => g.Subject.Name == Model.Schedules.FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Tuesday)?.Subject.Name && g.Date == Model.Dates.FirstOrDefault(d => d.DayOfWeek == DayOfWeek.Tuesday)))
+                                    {
+                                        @Model.Grades.FirstOrDefault(g => g.Subject.Name == Model.Schedules
+                                            .FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Tuesday)?.Subject.Name &&
+                                            g.Date == Model.Dates.FirstOrDefault(d => d.DayOfWeek == DayOfWeek.Tuesday))?.Mark
+                                    }
+                                </td>
+                            }
+                            else
+                            {
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <h4>П'ятниця</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th class="text-center" width="5%">№</th>
+                        <th class="text-center" width="35%">Предмет</th>
+                        <th class="text-center" width="48%">Домашнє завдання</th>
+                        <th class="text-center" width="12%">Оцінка</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 1; i <= WC.NumberOfLessons; i++)
+                    {
+                        <tr>
+                            <td class="text-center">@i</td>
+                            @if (Model.Schedules.Any(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Friday))
+                            {
+                                <td>
+                                    @Model.Schedules.FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Friday)?.Subject.Name
+                                </td>
+                                <td>
+                                    @if (Model.Homeworks.Any(h => h.Subject.Name == Model.Schedules.FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Friday)?.Subject.Name && h.Deadline == Model.Dates.FirstOrDefault(d => d.DayOfWeek == DayOfWeek.Friday)))
+                                    {
+                                        @Model.Homeworks.FirstOrDefault(h => h.Subject.Name == Model.Schedules
+                                            .FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Friday)?.Subject.Name &&
+                                            h.Deadline == Model.Dates.FirstOrDefault(d => d.DayOfWeek == DayOfWeek.Friday))?.Description
+                                    }
+                                </td>
+                                <td>
+                                    @if (Model.Grades.Any(g => g.Subject.Name == Model.Schedules.FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Friday)?.Subject.Name && g.Date == Model.Dates.FirstOrDefault(d => d.DayOfWeek == DayOfWeek.Friday)))
+                                    {
+                                        @Model.Grades.FirstOrDefault(g => g.Subject.Name == Model.Schedules
+                                            .FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Friday)?.Subject.Name &&
+                                            g.Date == Model.Dates.FirstOrDefault(d => d.DayOfWeek == DayOfWeek.Friday))?.Mark
+                                    }
+                                </td>
+                            }
+                            else
+                            {
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br /><br />
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Середа</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th class="text-center" width="5%">№</th>
+                        <th class="text-center" width="35%">Предмет</th>
+                        <th class="text-center" width="48%">Домашнє завдання</th>
+                        <th class="text-center" width="12%">Оцінка</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 1; i <= WC.NumberOfLessons; i++)
+                    {
+                        <tr>
+                            <td class="text-center">@i</td>
+                            @if (Model.Schedules.Any(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Wednesday))
+                            {
+                                <td>
+                                    @Model.Schedules.FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Wednesday)?.Subject.Name
+                                </td>
+                                <td>
+                                    @if (Model.Homeworks.Any(h => h.Subject.Name == Model.Schedules.FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Wednesday)?.Subject.Name && h.Deadline == Model.Dates.FirstOrDefault(d => d.DayOfWeek == DayOfWeek.Wednesday)))
+                                    {
+                                        @Model.Homeworks.FirstOrDefault(h => h.Subject.Name == Model.Schedules
+                                            .FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Wednesday)?.Subject.Name &&
+                                            h.Deadline == Model.Dates.FirstOrDefault(d => d.DayOfWeek == DayOfWeek.Wednesday))?.Description
+                                    }
+                                </td>
+                                <td>
+                                    @if (Model.Grades.Any(g => g.Subject.Name == Model.Schedules.FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Wednesday)?.Subject.Name && g.Date == Model.Dates.FirstOrDefault(d => d.DayOfWeek == DayOfWeek.Wednesday)))
+                                    {
+                                        @Model.Grades.FirstOrDefault(g => g.Subject.Name == Model.Schedules
+                                            .FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Wednesday)?.Subject.Name &&
+                                            g.Date == Model.Dates.FirstOrDefault(d => d.DayOfWeek == DayOfWeek.Wednesday))?.Mark
+                                    }
+                                </td>
+                            }
+                            else
+                            {
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <h4>Субота</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th class="text-center" width="5%">№</th>
+                        <th class="text-center" width="35%">Предмет</th>
+                        <th class="text-center" width="48%">Домашнє завдання</th>
+                        <th class="text-center" width="12%">Оцінка</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 1; i <= WC.NumberOfLessons; i++)
+                    {
+                        <tr>
+                            <td class="text-center">@i</td>
+                            @if (Model.Schedules.Any(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Saturday))
+                            {
+                                <td>
+                                    @Model.Schedules.FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Saturday)?.Subject.Name
+                                </td>
+                                <td>
+                                    @if (Model.Homeworks.Any(h => h.Subject.Name == Model.Schedules.FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Saturday)?.Subject.Name && h.Deadline == Model.Dates.FirstOrDefault(d => d.DayOfWeek == DayOfWeek.Saturday)))
+                                    {
+                                        @Model.Homeworks.FirstOrDefault(h => h.Subject.Name == Model.Schedules
+                                            .FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Saturday)?.Subject.Name &&
+                                            h.Deadline == Model.Dates.FirstOrDefault(d => d.DayOfWeek == DayOfWeek.Saturday))?.Description
+                                    }
+                                </td>
+                                <td>
+                                    @if (Model.Grades.Any(g => g.Subject.Name == Model.Schedules.FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Saturday)?.Subject.Name && g.Date == Model.Dates.FirstOrDefault(d => d.DayOfWeek == DayOfWeek.Saturday)))
+                                    {
+                                        @Model.Grades.FirstOrDefault(g => g.Subject.Name == Model.Schedules
+                                            .FirstOrDefault(s => s.LessonNumber == i && s.DayOfWeek == DayOfWeek.Saturday)?.Subject.Name &&
+                                            g.Date == Model.Dates.FirstOrDefault(d => d.DayOfWeek == DayOfWeek.Saturday))?.Mark
+                                    }
+                                </td>
+                            }
+                            else
+                            {
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
